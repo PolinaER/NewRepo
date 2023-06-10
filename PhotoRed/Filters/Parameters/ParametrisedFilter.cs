@@ -9,15 +9,23 @@ namespace PhotoRed
     public abstract class ParametrisedFilter<TParameters> : IFilter
         where TParameters : IParameters, new() 
     {
-        public ParametrInfo[] GetParametrsInfo() => (new TParameters()).GetDiscription();
+        protected string name;
+
+        IParametersHandler<TParameters> handler = new StaticParametersHandler<TParameters>();
+        
+        public ParametrInfo[] GetParametrsInfo() => handler.GetDescriptions();
 
         public Photo Process(Photo original, double[] values)
         {
-            var parameters = new TParameters();
-            parameters.SetValues(values);
+            var parameters = handler.CreateParameters(values);
             return Process(original, parameters);
         }
 
         public abstract Photo Process(Photo original, TParameters parameters);
+
+        public override string ToString()
+        {
+            return name;
+        }
     }
 }
