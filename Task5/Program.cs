@@ -18,13 +18,13 @@ namespace Task5
             foreach (var n in newNumbers)
                 Console.WriteLine(n);
 
-            var a = new Record { ClientID = 1, Year = 100, Month = 3, Duration = 10 };
-            var a1 = new Record { ClientID = 1, Year = 100, Month = 2, Duration = 10 };
+            var a1 = new Record { ClientID = 1, Year = 100, Month = 3, Duration = 10 };
+            var a11 = new Record { ClientID = 1, Year = 100, Month = 2, Duration = 10 };
             var a2 = new Record { ClientID = 1, Year = 101, Month = 3, Duration = 10 };
-            var b = new Record { ClientID = 2, Year = 100, Month = 3, Duration = 1 };
-            var b1 = new Record { ClientID = 2, Year = 100, Month = 5, Duration = 1 };
-            var c = new Record { ClientID = 3, Year = 100, Month = 3, Duration = 13 };
-            var cls = new Record[] { a, a1, a2, b, b1, c };
+            var b1 = new Record { ClientID = 2, Year = 100, Month = 3, Duration = 1 };
+            var b11 = new Record { ClientID = 2, Year = 100, Month = 5, Duration = 1 };
+            var c1 = new Record { ClientID = 3, Year = 100, Month = 3, Duration = 13 };
+            var cls = new Record[] { a1, a11, a2, b1, b11, c1 };
 
             PrintClientDurationForYears(cls);
 
