@@ -11,38 +11,48 @@ namespace Task5
         static void Main(string[] args)
         {
 
-            var numbers = new int[] { 1, 2, 3, 4, 5, 12, 32, 34, 11, 41, 43, 54, 10 };
+            var numbers = new int[] { 1, 2, 3, -4, 5, -12, 32, 34, -11, 41, 43, 54, 10, -2,-13 };
 
-            var newNumbers = numbers.Where(n => n % 2 != 0).Where(n => n.ToString().Contains("1")).Select(n => 0 - n).ToArray().OrderByDescending(n => n);
+            var newNumbers = numbers.Where(n => n % 2 != 0 && n<0).Where(n => n.ToString().Contains("1")).ToArray().OrderByDescending(n => n);
 
             foreach (var n in newNumbers)
                 Console.WriteLine(n);
 
-            var a1 = new Record { ClientID = 1, Year = 100, Month = 3, Duration = 10 };
-            var a11 = new Record { ClientID = 1, Year = 100, Month = 2, Duration = 10 };
-            var a2 = new Record { ClientID = 1, Year = 101, Month = 3, Duration = 10 };
-            var b1 = new Record { ClientID = 2, Year = 100, Month = 3, Duration = 1 };
-            var b11 = new Record { ClientID = 2, Year = 100, Month = 5, Duration = 1 };
-            var c1 = new Record { ClientID = 3, Year = 100, Month = 3, Duration = 13 };
-            var cls = new Record[] { a1, a11, a2, b1, b11, c1 };
+            var records = new List<Record>            {                 
+                new Record() {ClientID = 1, Year = 2023, Month = 1, Duration = 30},
+                new Record() {ClientID = 1, Year = 2023, Month = 3, Duration = 32},
+                new Record() {ClientID = 1, Year = 2023, Month = 4, Duration = 12},
+                new Record() {ClientID = 1, Year = 2023, Month = 5, Duration = 16},
+                new Record() {ClientID = 2, Year = 2023, Month = 1, Duration = 12},
+                new Record() {ClientID = 2, Year = 2023, Month = 2, Duration = 18},
+                new Record() {ClientID = 2, Year = 2023, Month = 3, Duration = 32},
+                new Record() {ClientID = 3, Year = 2023, Month = 1, Duration = 56},
+                new Record() {ClientID = 3, Year = 2023, Month = 2, Duration = 48},
+                new Record() {ClientID = 1, Year = 2022, Month = 4, Duration = 12},
+                new Record() {ClientID = 1, Year = 2022, Month = 5, Duration = 16},
+                new Record() {ClientID = 2, Year = 2022, Month = 1, Duration = 12},
+                new Record() {ClientID = 2, Year = 2022, Month = 2, Duration = 18},
+                new Record() {ClientID = 2, Year = 2022, Month = 3, Duration = 32},
+                new Record() {ClientID = 3, Year = 2022, Month = 1, Duration = 56},
+            };
 
-            PrintClientDurationForYears(cls);
+            PrintClientDurationForYears(records);
+
 
             Console.ReadKey();
         }
-        static void PrintClientDurationForYears(Record[] clients)
+        static void PrintClientDurationForYears(List<Record> records)
         {
-            clients.OrderBy(cl => cl.ClientID).ThenBy(cl => cl.Year)
+            var nrn = records
                     .Select(n => new Record()
                     {
                         ClientID = n.ClientID,
                         Year = n.Year,
-                        Duration = n.Duration + clients.Where(l => l.ClientID == n.ClientID && l.Year == n.Year && l.Month != n.Month)
-                        .Select(m => m.Duration).Sum()
-                    }).ToArray().Distinct()
-                    ;
+                        Duration = n.Duration + records.Where(l => l.ClientID == n.ClientID && l.Year == n.Year && l.Month != n.Month).Distinct().Select(m => m.Duration).Sum()
+                    }).Distinct().OrderBy(cl => cl.ClientID).ThenBy(cl => cl.Year)
+;
 
-            foreach (var c in clients)
+            foreach (var c in nrn)
                 Console.WriteLine($"У клиента {c.ClientID} продолжительность занятий {c.Duration} часов за {c.Year} год");
         }
     }
